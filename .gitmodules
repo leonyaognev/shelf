@@ -1,0 +1,3 @@
+[submodule "src/vendor/logger"]
+	path = src/vendor/logger
+	url = git@github.com:leonyaognev/logger.git

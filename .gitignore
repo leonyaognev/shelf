@@ -1,0 +1,11 @@
+.cache
+.vscode/
+build/
+*.o
+*.a
+*.log
+*.bin
+
+compile_commands.json
+
+shelf
