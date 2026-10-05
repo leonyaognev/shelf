@@ -1,6 +1,7 @@
 PROJECT_NAME           = "shelf"
 RECURSIVE              = YES
-INPUT                  = ./src ./s21_matrix.h
+INPUT                  = ./src
+EXCLUDE_PATTERNS       = */vendor/*
 OUTPUT_DIRECTORY       = ./build/docs
 GENERATE_LATEX         = NO
 EXTRACT_ALL            = YES
