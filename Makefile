@@ -16,6 +16,7 @@ DEBUG_LEVEL ?= 2
 
 CPPFLAGS := \
 	-I./include \
+	-I./src \
 	-I./src/vendor/logger
 
 CXXFLAGS := \
@@ -267,7 +268,8 @@ documentation:
 # Compilation database
 # =============================================================================
 
-compile_commands.json:
+.PHONY: compile_commands.json
+compile_commands.json: clean
 	@bear -- make all
 
 
