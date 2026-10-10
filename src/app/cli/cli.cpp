@@ -2,24 +2,28 @@
 
 #include <CLI11.h>
 
-#include <iostream>
 #include <string>
 
-#include "app/cli/commands/add.h"
+App::App() : cliApp("Temporary information shelf"), commands() {
+  commands.push_back({cliApp.add_subcommand("add", "Add an item"),
+                      [this]() { runAdd(content); }});
+  commands.back()
+      .cli->add_option("content", content, "Content to save")
+      ->required();
 
-int run(int argc, char* argv[]) {
-  CLI::App app{"Temporary information shelf"};
+  commands.push_back({cliApp.add_subcommand("list", "Get all items list"),
+                      [this]() { runList(); }});
+}
 
-  std::string content;
+int App::run(int argc, char* argv[]) {
+  try {
+    cliApp.parse(argc, argv);
+  } catch (const CLI::ParseError& e) {
+    return cliApp.exit(e);
+  }
 
-  auto* add = app.add_subcommand("add", "Add an item");
-
-  add->add_option("content", content, "Content to save")->required();
-
-  CLI11_PARSE(app, argc, argv);
-
-  if (*add) {
-    runAdd(content);
+  for (auto command : commands) {
+    if (*command.cli) command.execute();
   }
 
   return 0;
