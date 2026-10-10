@@ -1,7 +1,10 @@
 #include "domain/id/ulid.h"
 
 #include <chrono>
+#include <cstdint>
+#include <cstring>
 #include <random>
+#include <stdexcept>
 
 void ULID::getTime() {
   auto now = std::chrono::system_clock::now();
@@ -66,5 +69,13 @@ ULID::ULID() {
   getTime();
   getRandom();
 
-  id = base64(data);
+  str = base64(data);
+}
+
+ULID::ULID(std::vector<uint8_t> value) {
+  if (value.size() < 16)
+    throw std::runtime_error("ULID cannot initialize: value data to small");
+
+  std::memcpy(data, value.data(), 16);
+  str = base64(data);
 }

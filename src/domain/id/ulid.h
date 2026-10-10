@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 // -------------------------------------------------------------
 // ULID: 128-bit identifier.
@@ -10,14 +11,14 @@
 // as a 26-character Crockford base32 string exposed in `id`.
 // -------------------------------------------------------------
 class ULID {
-  uint8_t data[16];
-
   void getTime();
   void getRandom();
   std::string base64(uint8_t data[16]);
 
  public:
-  std::string id;
+  std::string str;
+  uint8_t data[16];
 
   ULID();
+  ULID(std::vector<uint8_t> value);
 };
